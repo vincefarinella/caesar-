@@ -13,12 +13,40 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
-import webapp2
 
+import webapp2
+import caesar
+import cgi
+
+#import caesar
+html_str="""
+<!DOCTYPE html>
+<html>
+<body>
+<form method="post">
+    rotation amount:<input name="submit"type="submit" value="submit">
+                    <input name="rotate" type="text" value="">
+    word:           <input name="word" type="text" value="">
+</form>
+</body>
+</html>"""
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-        self.response.write('Hello world!')
+
+
+        self.response.write(html_str)
+
+
+    def post(self):
+        rotate=self.request.get("rotate")
+        word=self.request.get("word")
+        rotate_character = caesar.encrypted(word,int(rotate))
+        response = html_str
+
+
+        self.response.write(rotate_character)
+
+
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler)
